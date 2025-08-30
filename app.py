@@ -159,8 +159,8 @@ def descargar():
         except:
             msgx = jsonify("url no valida")
             msg = json.loads(msgx.data)
-            if msg:
-                return redirect(url_for("serve_download"))
+            #if msg:
+            #    return redirect(url_for("serve_download"))
             return redirect(url_for("calendario",msg=msg))
             #msgx = jsonify("url no valida")
             #print(msg.data)
