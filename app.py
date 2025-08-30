@@ -151,7 +151,7 @@ def descargar():
             #msg="descargo: "+os.path.basename(filename)
             msg = json.loads(msgx.data)
             #return redirect(url_for("calendario",msg=msg))
-            if msg:
+            if not msg:
                 return redirect(url_for("serve_download",filename=os.path.basename(filename)))
             #return redirect(url_for("calendario",msg=msg))
             #return redirect
