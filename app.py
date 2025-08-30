@@ -147,7 +147,8 @@ def descargar():
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
             # return redirect(url_for('serve_download',filename=os.path.basename(filename)))
-            msgx = jsonify(f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}.")
+            #msgx = jsonify(f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}.")
+            msgx = jsonify(f"descargado con éxito como {os.path.basename(filename)}.")
             #print(msg.data)
             #msg=os.path.basename(filename)
             msg = json.loads(msgx.data)
