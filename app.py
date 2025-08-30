@@ -168,7 +168,7 @@ def descargar():
             #return redirect(url_for("calendario",msg=msg))
             #return redirect(url_for("serve_download"))
             
-@app.route("downloads/<filename>")
+@app.route("/downloads/<filename>")
 def serve_download(filename):
     #filename = os.path.basename(filename)
     filename = filename
