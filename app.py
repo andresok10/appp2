@@ -119,7 +119,7 @@ BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
 @app.route("/descargar", methods=["POST"])
 def descargar():
     # download_url = None
-    msg = ""
+    #msg = ""
     #msg_type = ""
     if request.method == "POST":
         url = request.form.get("url").split("?")[0]  # Limpiar la URL
@@ -150,9 +150,9 @@ def descargar():
             #print(msg.data)
             msg = json.loads(msgx.data)
             #return redirect(url_for("calendario",msg=msg))
-            if msg:
-                return redirect(url_for("serve_download",filename=os.path.basename(filename)))
-            return redirect(url_for("calendario",msg=msg))
+            #if msg:
+            return redirect(url_for("serve_download",filename="descargo: "+ os.path.basename(filename)))
+            #return redirect(url_for("calendario",msg=msg))
             #return redirect
         except:
             msgx = jsonify("url no valida")
