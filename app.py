@@ -32,6 +32,7 @@ signos = [
         ("Sagitario", (11, 22), (12, 21)),
 ]
 @app.route("/", methods=["GET", "POST"])
+@app.route("/cal", methods=["GET", "POST"])
 def calendario():
     #msg = ""
     hoy = datetime.today()
@@ -146,15 +147,15 @@ def descargar():
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
             # return redirect(url_for('serve_download',filename=os.path.basename(filename)))
-            #msgx = jsonify(f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}.")
+            msgx = jsonify(f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}.")
             #print(msg.data)
-            msg=os.path.basename(filename)
-            #msg = json.loads(msgx.data)
+            #msg=os.path.basename(filename)
+            msg = json.loads(msgx.data)
             #return redirect(url_for("calendario",msg=msg))
             #if msg:
             #return redirect(url_for("serve_download",filename=os.path.basename(filename)))
             #return redirect(url_for("calendario",msg=msg))
-            return redirect(f"/downloads/{msg}")
+            return redirect(f"downloads/{msg}")
         except:
             msgx = jsonify("url no valida")
             msg = json.loads(msgx.data)
@@ -166,13 +167,19 @@ def descargar():
             #msg = json.loads(msgx.data)
             #return redirect(url_for("calendario",msg=msg))
             #return redirect(url_for("serve_download"))
+            
+@app.route("downloads/<filename>")
+def serve_download(filename):
+    #filename = os.path.basename(filename)
+    filename = filename
+    return send_from_directory(BASE_DIR, filename, as_attachment=True)    
 
 ## Si quieres habilitar descarga directa de archivos:
 #@app.route("/downloads/<path:filename>")
-@app.route("/downloads/<filename>")
+#@app.route("/downloads/<filename>")
 # @app.route("/download/<path:output_file>")
-def serve_download(filename):
-    filename = os.path.basename(filename)
+#def serve_download(filename):
+#    filename = os.path.basename(filename)
     #filename = f"descargado con éxito como {os.path.basename(filename)}."
     # print(filename) # 1.webm
     # filename = os.path.join(BASE_DIR, os.path.basename(filename))
@@ -181,7 +188,7 @@ def serve_download(filename):
 
     # return send_from_directory(file_path, filename, as_attachment=True)
     # return send_from_directory("downloads", output_file, as_attachment=True)
-    return send_from_directory(BASE_DIR, filename, as_attachment=True)
+#    return send_from_directory(BASE_DIR, filename, as_attachment=True)
 
 if __name__ == "__main__":
     # app.run(debug=True)
