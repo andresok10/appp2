@@ -152,7 +152,7 @@ def descargar():
             #msg = json.loads(msgx.data)
             #return redirect(url_for("calendario",msg=msg))
             #if msg:
-            return redirect(url_for("serve_download",filename=filename))
+            return redirect(url_for("serve_download",filename=f"des: {os.path.basename(filename)}"))
             #return redirect(url_for("calendario",msg=msg))
         except:
             msgx = jsonify("url no valida")
