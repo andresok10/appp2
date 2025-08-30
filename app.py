@@ -150,12 +150,21 @@ def descargar():
             #print(msg.data)
             msg = json.loads(msgx.data)
             #return redirect(url_for("calendario",msg=msg))
-            return redirect(url_for("serve_download"))
+            if not msg:
+                return redirect(url_for("serve_download"))
+            return redirect(url_for("calendario",msg=msg))
+            #return redirect
         except:
             msgx = jsonify("url no valida")
-            #print(msg.data)
             msg = json.loads(msgx.data)
+            if not msg:
+                return redirect(url_for("serve_download"))
             return redirect(url_for("calendario",msg=msg))
+            #msgx = jsonify("url no valida")
+            #print(msg.data)
+            #msg = json.loads(msgx.data)
+            #return redirect(url_for("calendario",msg=msg))
+            #return redirect(url_for("serve_download"))
 
 ## Si quieres habilitar descarga directa de archivos:
 @app.route("/downloads/<path:filename>")
