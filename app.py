@@ -146,13 +146,13 @@ def descargar():
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
             # return redirect(url_for('serve_download',filename=os.path.basename(filename)))
-            #msgx = jsonify(f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}.")
+            msgx = jsonify(f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}.")
             #print(msg.data)
             #msg="descargo: "+os.path.basename(filename)
-            #msg = json.loads(msgx.data)
+            msg = json.loads(msgx.data)
             #return redirect(url_for("calendario",msg=msg))
-            #if msg:
-            return redirect(url_for("serve_download",filename="descargo: ".join(os.path.basename(filename))))
+            if msg:
+                return redirect(url_for("serve_download",filename=os.path.basename(filename)))
             #return redirect(url_for("calendario",msg=msg))
             #return redirect
         except:
