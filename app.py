@@ -149,13 +149,13 @@ def descargar():
             # return redirect(url_for('serve_download',filename=os.path.basename(filename)))
             msgx = jsonify(f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}.")
             #print(msg.data)
-            msg=os.path.basename(filename)
-            #msg = json.loads(msgx.data)
+            #msg=os.path.basename(filename)
+            msg = json.loads(msgx.data)
             #return redirect(url_for("calendario",msg=msg))
             #if msg:
             #return redirect(url_for("serve_download",filename=os.path.basename(filename)))
             #return redirect(url_for("calendario",msg=msg))
-            return redirect(f"downloads/{msg}")
+            return redirect(f"/downloads/{msg}")
         except:
             msgx = jsonify("url no valida")
             msg = json.loads(msgx.data)
