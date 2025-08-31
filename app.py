@@ -38,7 +38,7 @@ BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
 @app.route("/", methods=["GET", "POST"])
 #@app.route("/calen", methods=["GET", "POST"])
 def calendario():
-    msg = ""
+    #msg = ""
     hoy = datetime.today()
     meses = [
         {
@@ -56,6 +56,11 @@ def calendario():
     cumple = ""
     faltan = None
     descuento = None
+    
+    # recoger mensajes de la descarga si existen
+    msg = request.args.get("msg", "")
+    #msg_type = request.args.get("msg_type", "")
+    #download_url = request.args.get("download_url", "") # download_url=download_url,
 
     if request.method == "POST":
         try:
@@ -93,11 +98,6 @@ def calendario():
         except:
             #descuento = "Error en los datos ingresados"
             msg = ""
-    
-        # recoger mensajes de la descarga si existen
-        msg = request.args.get("msg", "")
-        #msg_type = request.args.get("msg_type", "")
-        #download_url = request.args.get("download_url", "") # download_url=download_url,
         
         ############################################################################
         try:
@@ -138,47 +138,6 @@ def calendario():
         "app.html",hoy=hoy,meses=meses,edad=edad,fn=fn,signo=signo,cumple=cumple,faltan=faltan,descuento=descuento,
         msg=msg,
     )
-
-# @app.route("/descargar", methods=["GET", "POST"])
-'''@app.route("/descargar", methods=["POST"])
-def descargar():
-    # download_url = None
-    #msg = ""
-    #msg_type = ""
-    if request.method == "POST":
-        
-        try:
-            with YoutubeDL(ydl_opts) as ydl:
-                ydl.download([url])
-            msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
-            #print(msg.data)
-            #msg = json.loads(msgx.data)
-            #return redirect(url_for("calendario",msg))
-            #return render_template("app.html",msg=msg)
-            return jsonify(
-                {
-                    "status": "success",
-                    "msg": msgx,
-                    "download_url": url_for("serve_download", filename=os.path.basename(filename)),
-                }
-            )
-        except Exception as e:
-                msg = "Error al descargar el archivo: URL no válida"
-                return jsonify({"status": "error", "msg": msg})'''
-
-## Si quieres habilitar descarga directa de archivos:
-@app.route("/downloads/<path:filename>")
-# @app.route("/download/<path:output_file>")
-def serve_download(filename):
-    filename = os.path.basename(filename)
-    # print(filename) # 1.webm
-    # filename = os.path.join(BASE_DIR, os.path.basename(filename))
-    # print(filename)
-    # file_path = os.path.join(BASE_DIR, filename)
-
-    # return send_from_directory(file_path, filename, as_attachment=True)
-    # return send_from_directory("downloads", output_file, as_attachment=True)
-    return send_from_directory(BASE_DIR, filename, as_attachment=True)
 
 if __name__ == "__main__":
     # app.run(debug=True)
