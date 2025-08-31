@@ -156,7 +156,7 @@ def descargar():
             #if msg:
             texto="descargado:"
             #return redirect(url_for("serve_download",filename=os.path.basename(filename)))
-            return redirect(url_for("serve_download",filename=texto+"/"+msg))
+            return redirect(url_for("serve_download",msg=texto+"/"+msg))
             #return redirect(url_for("calendario",msg=msg))
             #return redirect(f"/downloads/{msg}")
         except:
