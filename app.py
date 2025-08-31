@@ -108,9 +108,8 @@ def calendario():
             extension = "m4a" if download_type == "audio" else "webm"
             counter = 1
             while True:
-                # filename = os.path.join(output1, f"{counter}.{extension}")
-                # output_file = os.path.join(DOWNLOADS_DIR, f"{counter}.{extension}")
-                filename = os.path.join(BASE_DIR, f"{counter}.{extension}")
+                file = f"{counter}.{extension}"
+                filename = os.path.join(BASE_DIR,file)
                 if not os.path.exists(filename):
                     break
                 counter += 1
@@ -127,7 +126,9 @@ def calendario():
                 msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
                 #print(msg.data)
                 msg = json.loads(msgx.data)
-                return redirect(url_for("calendario",msg))
+                #return redirect(url_for("calendario",msg))
+                #return redirect(f"/downloads/{file}") # si vale
+                return send_from_directory(BASE_DIR, file, as_attachment=True)  
                     
             except:
                 msg = "no"
