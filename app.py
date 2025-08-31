@@ -95,40 +95,40 @@ def calendario():
             msg = ""
         
         ############################################################################
-        try:
-            url = request.form.get("url").split("?")[0]  # Limpiar la URL
-            # url = request.form.get("url")
-            download_type = request.form.get("download_type")
-            # extension = 'mp3' if download_type == 'audio' else 'mp4'
-            extension = "m4a" if download_type == "audio" else "webm"
-            counter = 1
-            while True:
-                file = f"{counter}.{extension}"
-                filename = os.path.join(BASE_DIR,file)
-                if not os.path.exists(filename):
-                    break
-                counter += 1
-            format_flag = "bestaudio" if download_type == "audio" else "best"
-            ydl_opts = {
+        #try:
+        url = request.form.get("url").split("?")[0]  # Limpiar la URL
+        # url = request.form.get("url")
+        download_type = request.form.get("download_type")
+        # extension = 'mp3' if download_type == 'audio' else 'mp4'
+        extension = "m4a" if download_type == "audio" else "webm"
+        counter = 1
+        while True:
+            file = f"{counter}.{extension}"
+            filename = os.path.join(BASE_DIR,file)
+            if not os.path.exists(filename):
+                break
+            counter += 1
+        format_flag = "bestaudio" if download_type == "audio" else "best"
+        ydl_opts = {
                     "format": format_flag,
                     "outtmpl": filename,
                     "quiet": True,
                     "no_warnings": True,
-                }
-            try:
-                with YoutubeDL(ydl_opts) as ydl:
-                    ydl.download([url])
-                msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
-                print(msg.data)
-                msg = json.loads(msgx.data)
-                #return redirect(url_for("calendario",msg))
-                #return redirect(f"/downloads/{file}") # si vale
-                return send_from_directory(BASE_DIR, file, as_attachment=True)
+            }
+        try:
+            with YoutubeDL(ydl_opts) as ydl:
+                ydl.download([url])
+            msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+            print(msg.data)
+            msg = json.loads(msgx.data)
+            #return redirect(url_for("calendario",msg))
+            #return redirect(f"/downloads/{file}") # si vale
+            return send_from_directory(BASE_DIR, file, as_attachment=True)
                     
-            except:
-                msg = "no"
-                return redirect(url_for("calendario",msg))
-        except:msg="xxx"
+        except:
+            msg = "url no valido"
+            return redirect(url_for("calendario",msg))
+        #except:msg="xxx"
         
     # recoger mensajes de la descarga si existen
     #msg = request.args.get("msg", "")
