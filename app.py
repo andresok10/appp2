@@ -126,7 +126,7 @@ def calendario():
                 ydl.download([url])
             msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
             #print(msg.data)
-            #msg = json.loads(msgx.data)
+            msg = json.loads(msgx.data)
             return redirect(url_for("calendario",msg))
                 
         except:
