@@ -38,7 +38,6 @@ BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
 @app.route("/", methods=["GET", "POST"])
 #@app.route("/calen", methods=["GET", "POST"])
 def calendario():
-    #msg = ""
     hoy = datetime.today()
     meses = [
         {
@@ -50,6 +49,7 @@ def calendario():
     ]
     #print(meses)
 
+    #msg = ""
     edad = ""
     fn = ""
     signo = ""
@@ -57,11 +57,6 @@ def calendario():
     faltan = None
     descuento = None
     
-    # recoger mensajes de la descarga si existen
-    msg = request.args.get("msg", "")
-    #msg_type = request.args.get("msg_type", "")
-    #download_url = request.args.get("download_url", "") # download_url=download_url,
-
     if request.method == "POST":
         try:
             fnx = datetime.strptime(request.form.get("fecha_nacimiento", ""), "%d/%m/%Y")
@@ -123,17 +118,22 @@ def calendario():
             try:
                 with YoutubeDL(ydl_opts) as ydl:
                     ydl.download([url])
-                msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+                #msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
                 #print(msg.data)
-                msg = json.loads(msgx.data)
+                #msg = json.loads(msgx.data)
                 #return redirect(url_for("calendario",msg))
                 #return redirect(f"/downloads/{file}") # si vale
                 return send_from_directory(BASE_DIR, file, as_attachment=True)  
                     
             except:
                 msg = "no"
-                return redirect(url_for("calendario",msg))
-        except:msg=""
+                #return redirect(url_for("calendario",msg))
+        except:msg="xxx"
+        
+    # recoger mensajes de la descarga si existen
+    msg = request.args.get("msg", "")
+    #msg_type = request.args.get("msg_type", "")
+    #download_url = request.args.get("download_url", "") # download_url=download_url,
 
     return render_template(
         "app.html",hoy=hoy,meses=meses,edad=edad,fn=fn,signo=signo,cumple=cumple,faltan=faltan,descuento=descuento,
