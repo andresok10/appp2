@@ -127,7 +127,7 @@ def calendario():
                     
         except:
             msg = "url no valido"
-            return redirect(url_for("calendario",msg))
+            #return redirect(url_for("calendario",msg))
         #except:msg="xxx"
         
     # recoger mensajes de la descarga si existen
