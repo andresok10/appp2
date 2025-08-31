@@ -130,7 +130,8 @@ def descargar():
         while True:
             # filename = os.path.join(output1, f"{counter}.{extension}")
             # output_file = os.path.join(DOWNLOADS_DIR, f"{counter}.{extension}")
-            filename = os.path.join(BASE_DIR, f"{counter}.{extension}")
+            file = f"{counter}.{extension}"
+            filename = os.path.join(BASE_DIR,file)
             if not os.path.exists(filename):
                 break
             counter += 1
@@ -151,7 +152,7 @@ def descargar():
 
             # Redirige a "/" con msg en la URL (GET)
             #return redirect(url_for("calendario", msg=msg))
-            return redirect(f"/downloads{filename}")
+            return redirect(f"/downloads{file}")
 
         except Exception as e:
             msg = f"Error al descargar: {str(e)}"
