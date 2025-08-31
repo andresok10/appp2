@@ -123,15 +123,15 @@ def calendario():
                 msg = json.loads(msgx.data)
                 #return redirect(url_for("calendario",msg))
                 #return redirect(f"/downloads/{file}") # si vale
-                return send_from_directory(BASE_DIR, file, as_attachment=True)+msg
+                return send_from_directory(BASE_DIR, file, as_attachment=True)
                     
             except:
                 msg = "no"
-                #return redirect(url_for("calendario",msg))
+                return redirect(url_for("calendario",msg))
         except:msg="xxx"
         
     # recoger mensajes de la descarga si existen
-    msg = request.args.get("msg", "")
+    #msg = request.args.get("msg", "")
     #msg_type = request.args.get("msg_type", "")
     #download_url = request.args.get("download_url", "") # download_url=download_url,
 
