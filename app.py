@@ -158,6 +158,18 @@ def descargar():
             msg = f"Error al descargar: {str(e)}"
             return redirect(url_for("calendario", msg=msg))
         
+        '''try:
+            with YoutubeDL(ydl_opts) as ydl:
+                ydl.download([url])
+
+            msg = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+            flash(msg)  # Guardar mensaje en flash
+            return redirect(url_for("calendario"))
+
+        except Exception as e:
+            flash(f"Error al descargar: {str(e)}")
+            return redirect(url_for("calendario"))'''
+        
         try:
             # return redirect(url_for('serve_download',filename=os.path.basename(filename)))
             #msgx = jsonify(f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}.")
@@ -184,12 +196,12 @@ def descargar():
             #return redirect(url_for("calendario",msg=msg))
             #return redirect(url_for("serve_download"))
             
-@app.route("/downloads/<filename>")
-def serve_download(filename):
+@app.route("/downloads/<file>")
+def serve_download(file):
     texto="aaaa"
     #filename = os.path.basename(filename)
     #filename = filename
-    return send_from_directory(BASE_DIR, filename, as_attachment=True)   
+    return send_from_directory(BASE_DIR, file, as_attachment=True)   
 
 ## Si quieres habilitar descarga directa de archivos:
 #@app.route("/downloads/<path:filename>")
