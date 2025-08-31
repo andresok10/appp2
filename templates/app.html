@@ -246,19 +246,11 @@
         </form>
         {% if edad %}
         <p class="resultado">Edad: {{ edad }}</p>
-        {% endif %}
-        {% if signo %}
+        <p class="resultado">F. Nac: {{ fn }}</p>
+        <p class="resultado"><b>cumpleaño: {{ cumple }}</b>(faltan {{ faltan }} días)</p>
         <p class="resultado">Signo: {{ signo }}</p>
         {% endif %}
-        {% if fn %}
-        <p class="resultado">F. Nac: {{ fn }}</p>
-        {% endif %}
-        {% if cumple %}
-        <p class="resultado">cumpleaño: {{ cumple }}</p>
-        {% endif %}
-        {% if faltan %}
-        <p class="resultado">Faltan {{ faltan }} días para tu próximo cumpleaños</p>
-        {% endif %}
+
     </div>
 
 

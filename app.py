@@ -95,8 +95,8 @@ def calendario():
             msg = ""
         
         ############################################################################
-        url = request.form.get("url").split("?")[0]  # Limpiar la URL
-        # url = request.form.get("url")
+        #url = request.form.get("url").split("?")[0]  # Limpiar la URL
+        url = request.form.get("url","").split("?")[0]
         download_type = request.form.get("download_type")
         # extension = 'mp3' if download_type == 'audio' else 'mp4'
         extension = "m4a" if download_type == "audio" else "webm"
