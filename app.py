@@ -31,6 +31,10 @@ signos = [
         ("Escorpio", (10, 23), (11, 21)),
         ("Sagitario", (11, 22), (12, 21)),
 ]
+# Carpeta base donde están los archivos que vas a descargar
+BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
+# Crear la carpeta si no existe
+# os.makedirs(BASE_DIR, exist_ok=True)
 @app.route("/", methods=["GET", "POST"])
 #@app.route("/calen", methods=["GET", "POST"])
 def calendario():
@@ -96,10 +100,6 @@ def calendario():
     #download_url = request.args.get("download_url", "") # download_url=download_url,
     
     ############################################################################
-    # Carpeta base donde están los archivos que vas a descargar
-    BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
-    # Crear la carpeta si no existe
-    # os.makedirs(BASE_DIR, exist_ok=True)
     try:
         url = request.form.get("url").split("?")[0]  # Limpiar la URL
         # url = request.form.get("url")
@@ -135,19 +135,9 @@ def calendario():
     except:msg=""
 
     return render_template(
-        "app.html",
+        "app.html",hoy=hoy,meses=meses,edad=edad,fn=fn,signo=signo,cumple=cumple,faltan=faltan,descuento=descuento,
         msg=msg,
-        hoy=hoy,
-        meses=meses,
-        edad=edad,
-        fn=fn,
-        signo=signo,
-        cumple=cumple,
-        faltan=faltan,
-        descuento=descuento,
     )
-
-
 
 # @app.route("/descargar", methods=["GET", "POST"])
 '''@app.route("/descargar", methods=["POST"])
