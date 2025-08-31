@@ -49,7 +49,7 @@ def calendario():
     ]
     #print(meses)
 
-    #msg = ""
+    msg = ""
     edad = ""
     fn = ""
     signo = ""
@@ -95,7 +95,6 @@ def calendario():
             msg = ""
         
         ############################################################################
-        #try:
         url = request.form.get("url").split("?")[0]  # Limpiar la URL
         # url = request.form.get("url")
         download_type = request.form.get("download_type")
@@ -116,25 +115,12 @@ def calendario():
                     "no_warnings": True,
             }
         try:
-            with YoutubeDL(ydl_opts) as ydl:
-                ydl.download([url])
-            #msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
-            msgx = f"{download_type.capitalize()} descargado con éxito como {file}."
-            #print(msg.data)
-            #msg = json.loads(msgx.data)
-            #return redirect(url_for("calendario",msg))
-            #return redirect(f"/downloads/{file}") # si vale
+            #with YoutubeDL(ydl_opts) as ydl:
+            #    ydl.download([url])
+            YoutubeDL(ydl_opts).download([url])
             return send_from_directory(BASE_DIR, file, as_attachment=True)
-                    
         except:
-            msg = "url no valido"
-            #return redirect(url_for("calendario",msg))
-        #except:msg="xxx"
-        
-    # recoger mensajes de la descarga si existen
-    #msg = request.args.get("msg", "")
-    #msg_type = request.args.get("msg_type", "")
-    #download_url = request.args.get("download_url", "") # download_url=download_url,
+            msg = ""
 
     return render_template(
         "app.html",hoy=hoy,meses=meses,edad=edad,fn=fn,signo=signo,cumple=cumple,faltan=faltan,descuento=descuento,
