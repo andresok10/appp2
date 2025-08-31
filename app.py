@@ -151,7 +151,7 @@ def descargar():
 
             # Redirige a "/" con msg en la URL (GET)
             #return redirect(url_for("calendario", msg=msg))
-            return redirect(f"/downloads/{filename}")
+            return redirect(f"/downloads{filename}")
 
         except Exception as e:
             msg = f"Error al descargar: {str(e)}"
