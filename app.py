@@ -100,7 +100,6 @@ def calendario():
     return render_template(
         "app.html",
         msg=msg,
-        
         hoy=hoy,
         meses=meses,
         edad=edad,
