@@ -143,7 +143,22 @@ def descargar():
             "quiet": True,
             "no_warnings": True,
         }
+        
         try:
+            with YoutubeDL(ydl_opts) as ydl:
+                ydl.download([url])
+
+            msg = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+
+            # Redirige a "/" con msg en la URL (GET)
+            return redirect(url_for("calendario", msg=msg))
+
+        except Exception as e:
+            msg = f"Error al descargar: {str(e)}"
+            return redirect(url_for("calendario", msg=msg))
+        
+        try:
+            
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
             # return redirect(url_for('serve_download',filename=os.path.basename(filename)))
@@ -156,8 +171,8 @@ def descargar():
             #if msg:
             texto="descargado:"
             #return redirect(url_for("serve_download",filename=os.path.basename(filename)))
-            return redirect(url_for("serve_download",msg=texto+"/"+msg))
-            #return redirect(url_for("calendario",msg=msg))
+            #return redirect(url_for("serve_download",msg=texto+"/"+msg))
+            return redirect(url_for("calendario",msg=msg))
             #return redirect(f"/downloads/{msg}")
         except:
             msgx = jsonify("url no valida")
