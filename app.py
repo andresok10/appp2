@@ -147,8 +147,8 @@ def descargar():
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
 
-            #msg = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
-            msg = f"{download_type.capitalize()} listo: <a href='{url_for('serve_download', filename=os.path.basename(filename))}'>Descargar aquí</a>"
+            msg = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+            #msg = f"{download_type.capitalize()} listo: <a href='{url_for('serve_download', filename=os.path.basename(filename))}'>Descargar aquí</a>"
 
             # Redirige a "/" con msg en la URL (GET)
             return redirect(url_for("calendario", msg=msg))
@@ -161,6 +161,8 @@ def descargar():
             
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
+            #msg = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+            msg = f"{download_type.capitalize()} listo: <a href='{url_for('serve_download', filename=os.path.basename(filename))}'>Descargar aquí</a>"
             # return redirect(url_for('serve_download',filename=os.path.basename(filename)))
             #msgx = jsonify(f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}.")
             #msgx = jsonify(f"descargado con éxito como {os.path.basename(filename)}.")
