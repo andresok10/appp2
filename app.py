@@ -120,9 +120,6 @@ BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
 
 @app.route("/descargar", methods=["POST"])
 def descargar():
-    # download_url = None
-    #msg = ""
-    #msg_type = ""
     if request.method == "POST":
         url = request.form.get("url").split("?")[0]  # Limpiar la URL
         # url = request.form.get("url")
@@ -149,11 +146,12 @@ def descargar():
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
 
-            msg = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+            #msg = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
             #msg = f"{download_type.capitalize()} listo: <a href='{url_for('serve_download', filename=os.path.basename(filename))}'>Descargar aquí</a>"
 
             # Redirige a "/" con msg en la URL (GET)
-            return redirect(url_for("calendario", msg=msg))
+            #return redirect(url_for("calendario", msg=msg))
+            return redirect(f"/downloads/{filename}")
 
         except Exception as e:
             msg = f"Error al descargar: {str(e)}"
