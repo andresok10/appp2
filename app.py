@@ -38,7 +38,7 @@ BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
 @app.route("/", methods=["GET", "POST"])
 #@app.route("/calen", methods=["GET", "POST"])
 def calendario():
-    #msg = ""
+    msg = ""
     hoy = datetime.today()
     meses = [
         {
