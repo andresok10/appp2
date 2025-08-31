@@ -156,7 +156,7 @@ def descargar():
             #if msg:
             texto="descargado:"
             #return redirect(url_for("serve_download",filename=os.path.basename(filename)))
-            return redirect(url_for("serve_download",filename=msg))
+            return redirect(url_for("serve_download",filename=texto+msg))
             #return redirect(url_for("calendario",msg=msg))
             #return redirect(f"/downloads/{msg}")
         except:
@@ -176,7 +176,7 @@ def serve_download(filename):
     texto="aaaa"
     #filename = os.path.basename(filename)
     #filename = filename
-    return send_from_directory(BASE_DIR, texto+filename, as_attachment=True)   
+    return send_from_directory(BASE_DIR, filename, as_attachment=True)   
 
 ## Si quieres habilitar descarga directa de archivos:
 #@app.route("/downloads/<path:filename>")
