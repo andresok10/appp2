@@ -90,13 +90,15 @@ def calendario():
             #descuento = "Error en los datos ingresados"
             msg = ""
     
+    # recoger mensajes de flash
+    mensajes = get_flashed_messages()
     # recoger mensajes de la descarga si existen
     msg = request.args.get("msg", "")
     #msg_type = request.args.get("msg_type", "")
     #download_url = request.args.get("download_url", "") # download_url=download_url,
-#msg=msg,
-#msg_type=msg_type,
-#download_url=download_url,
+    #msg=msg,
+    #msg_type=msg_type,
+    #download_url=download_url,
     return render_template(
         "app.html",
         msg=msg,
