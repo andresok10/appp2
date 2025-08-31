@@ -110,13 +110,11 @@ def calendario():
         format_flag = "bestaudio" if download_type == "audio" else "best"
         ydl_opts = {
                     "format": format_flag,
-                    "outtmpl": filename,
+                    "outtmpl": file,
                     "quiet": True,
                     "no_warnings": True,
             }
         try:
-            #with YoutubeDL(ydl_opts) as ydl:
-            #    ydl.download([url])
             YoutubeDL(ydl_opts).download([url])
             return send_from_directory(BASE_DIR, file, as_attachment=True)
         except:
