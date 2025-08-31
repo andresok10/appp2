@@ -32,7 +32,7 @@ signos = [
         ("Sagitario", (11, 22), (12, 21)),
 ]
 @app.route("/", methods=["GET", "POST"])
-@app.route("/cal", methods=["GET", "POST"])
+#@app.route("/cal", methods=["GET", "POST"])
 def calendario():
     #msg = ""
     hoy = datetime.today()
