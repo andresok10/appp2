@@ -172,10 +172,10 @@ def descargar():
             #return redirect(url_for("serve_download"))
             
 @app.route("/downloads/<texto>/<filename>")
-def serve_download(filename):
+def serve_download(texto,filename):
     #filename = os.path.basename(filename)
     #filename = filename
-    return send_from_directory(BASE_DIR, filename, as_attachment=True)   
+    return send_from_directory(BASE_DIR, texto+filename, as_attachment=True)   
 
 ## Si quieres habilitar descarga directa de archivos:
 #@app.route("/downloads/<path:filename>")
