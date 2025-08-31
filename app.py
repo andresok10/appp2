@@ -118,9 +118,10 @@ def calendario():
         try:
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
-            msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+            #msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+            msgx = f"{download_type.capitalize()} descargado con éxito como {file}."
             #print(msg.data)
-            msg = json.loads(msgx.data)
+            #msg = json.loads(msgx.data)
             #return redirect(url_for("calendario",msg))
             #return redirect(f"/downloads/{file}") # si vale
             return send_from_directory(BASE_DIR, file, as_attachment=True)
