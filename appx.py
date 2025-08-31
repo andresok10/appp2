@@ -32,7 +32,7 @@ signos = [
         ("Sagitario", (11, 22), (12, 21)),
 ]
 @app.route("/", methods=["GET", "POST"])
-#@app.route("/calen", methods=["GET", "POST"])
+#@app.route("/cal", methods=["GET", "POST"])
 def calendario():
     #msg = ""
     hoy = datetime.today()
@@ -90,50 +90,15 @@ def calendario():
             #descuento = "Error en los datos ingresados"
             msg = ""
     
+    # recoger mensajes de flash
+    mensajes = get_flashed_messages()
     # recoger mensajes de la descarga si existen
     msg = request.args.get("msg", "")
     #msg_type = request.args.get("msg_type", "")
     #download_url = request.args.get("download_url", "") # download_url=download_url,
-    
-    ############################################################################
-    # Carpeta base donde están los archivos que vas a descargar
-    BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
-    # Crear la carpeta si no existe
-    # os.makedirs(BASE_DIR, exist_ok=True)
-    try:
-        url = request.form.get("url").split("?")[0]  # Limpiar la URL
-        # url = request.form.get("url")
-        download_type = request.form.get("download_type")
-        # extension = 'mp3' if download_type == 'audio' else 'mp4'
-        extension = "m4a" if download_type == "audio" else "webm"
-        counter = 1
-        while True:
-            # filename = os.path.join(output1, f"{counter}.{extension}")
-            # output_file = os.path.join(DOWNLOADS_DIR, f"{counter}.{extension}")
-            filename = os.path.join(BASE_DIR, f"{counter}.{extension}")
-            if not os.path.exists(filename):
-                break
-            counter += 1
-        format_flag = "bestaudio" if download_type == "audio" else "best"
-        ydl_opts = {
-                "format": format_flag,
-                "outtmpl": filename,
-                "quiet": True,
-                "no_warnings": True,
-            }
-        try:
-            with YoutubeDL(ydl_opts) as ydl:
-                ydl.download([url])
-            msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
-            #print(msg.data)
-            #msg = json.loads(msgx.data)
-            return redirect(url_for("calendario",msg))
-                
-        except:
-            msg = "no"
-            return redirect(url_for("calendario",msg))
-    except:msg=""
-
+    #msg=msg,
+    #msg_type=msg_type,
+    #download_url=download_url,
     return render_template(
         "app.html",
         msg=msg,
@@ -147,40 +112,111 @@ def calendario():
         descuento=descuento,
     )
 
+############################################################################
+# Carpeta base donde están los archivos que vas a descargar
+BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
+# Crear la carpeta si no existe
+# os.makedirs(BASE_DIR, exist_ok=True)
 
-
-# @app.route("/descargar", methods=["GET", "POST"])
-'''@app.route("/descargar", methods=["POST"])
+@app.route("/descargar", methods=["POST"])
 def descargar():
-    # download_url = None
-    #msg = ""
-    #msg_type = ""
     if request.method == "POST":
+        url = request.form.get("url").split("?")[0]  # Limpiar la URL
+        # url = request.form.get("url")
+        download_type = request.form.get("download_type")
+        # extension = 'mp3' if download_type == 'audio' else 'mp4'
+        extension = "m4a" if download_type == "audio" else "webm"
+        counter = 1
+        while True:
+            # filename = os.path.join(output1, f"{counter}.{extension}")
+            # output_file = os.path.join(DOWNLOADS_DIR, f"{counter}.{extension}")
+            file = f"{counter}.{extension}"
+            filename = os.path.join(BASE_DIR,file)
+            if not os.path.exists(filename):
+                break
+            counter += 1
+        format_flag = "bestaudio" if download_type == "audio" else "best"
+        ydl_opts = {
+            "format": format_flag,
+            "outtmpl": filename,
+            "quiet": True,
+            "no_warnings": True,
+        }
         
         try:
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
-            msgx = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+            #return redirect(f"/downloads/{file}") # si vale
+            return send_from_directory(BASE_DIR, file, as_attachment=True)  
+
+        except Exception as e:
+            msg = f"Error al descargar: {str(e)}"
+            return redirect(url_for("calendario", msg=msg))
+        
+        '''try:
+            with YoutubeDL(ydl_opts) as ydl:
+                ydl.download([url])
+            #msg = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+            #msg = f"{download_type.capitalize()} listo: <a href='{url_for('serve_download', filename=os.path.basename(filename))}'>Descargar aquí</a>"
+            # Redirige a "/" con msg en la URL (GET)
+            #return redirect(url_for("calendario", msg=msg))
+            #return redirect(f"/downloads/{file}") # si vale
+            return send_from_directory(BASE_DIR, file, as_attachment=True)  
+
+        except Exception as e:
+            msg = f"Error al descargar: {str(e)}"
+            return redirect(url_for("calendario", msg=msg))'''
+        
+        '''try:
+            with YoutubeDL(ydl_opts) as ydl:
+                ydl.download([url])
+            msg = f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}."
+            flash(msg)  # Guardar mensaje en flash
+            return redirect(url_for("calendario"))
+        except Exception as e:
+            flash(f"Error al descargar: {str(e)}")
+            return redirect(url_for("calendario"))'''
+        
+        try:
+            # return redirect(url_for('serve_download',filename=os.path.basename(filename)))
+            #msgx = jsonify(f"{download_type.capitalize()} descargado con éxito como {os.path.basename(filename)}.")
+            #msgx = jsonify(f"descargado con éxito como {os.path.basename(filename)}.")
+            #print(msg.data)
+            msg=os.path.basename(filename)
+            #msg = json.loads(msgx.data)
+            #return redirect(url_for("calendario",msg=msg))
+            #if msg:
+            texto="descargado:"
+            #return redirect(url_for("serve_download",filename=os.path.basename(filename)))
+            #return redirect(url_for("serve_download",msg=texto+"/"+msg))
+            return redirect(url_for("calendario",msg=msg))
+            #return redirect(f"/downloads/{msg}")
+        except:
+            msgx = jsonify("url no valida")
+            msg = json.loads(msgx.data)
+            #if msg:
+            #    return redirect(url_for("serve_download"))
+            return redirect(url_for("calendario",msg=msg))
+            #msgx = jsonify("url no valida")
             #print(msg.data)
             #msg = json.loads(msgx.data)
-            #return redirect(url_for("calendario",msg))
-            #return render_template("app.html",msg=msg)
-            return jsonify(
-                {
-                    "status": "success",
-                    "msg": msgx,
-                    "download_url": url_for("serve_download", filename=os.path.basename(filename)),
-                }
-            )
-        except Exception as e:
-                msg = "Error al descargar el archivo: URL no válida"
-                return jsonify({"status": "error", "msg": msg})'''
+            #return redirect(url_for("calendario",msg=msg))
+            #return redirect(url_for("serve_download"))
+            
+#@app.route("/downloads/<file>")
+#def serve_download(file):
+#    texto="aaaa"
+    #filename = os.path.basename(filename)
+    #filename = filename
+#    return send_from_directory(BASE_DIR, file, as_attachment=True)   
 
 ## Si quieres habilitar descarga directa de archivos:
-@app.route("/downloads/<path:filename>")
+#@app.route("/downloads/<path:filename>")
+#@app.route("/downloads/<filename>")
 # @app.route("/download/<path:output_file>")
-def serve_download(filename):
-    filename = os.path.basename(filename)
+#def serve_download(filename):
+#    filename = os.path.basename(filename)
+    #filename = f"descargado con éxito como {os.path.basename(filename)}."
     # print(filename) # 1.webm
     # filename = os.path.join(BASE_DIR, os.path.basename(filename))
     # print(filename)
@@ -188,7 +224,7 @@ def serve_download(filename):
 
     # return send_from_directory(file_path, filename, as_attachment=True)
     # return send_from_directory("downloads", output_file, as_attachment=True)
-    return send_from_directory(BASE_DIR, filename, as_attachment=True)
+#    return send_from_directory(BASE_DIR, filename, as_attachment=True)
 
 if __name__ == "__main__":
     # app.run(debug=True)
