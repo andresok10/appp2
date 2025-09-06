@@ -31,7 +31,7 @@ signos = [
         ("Escorpio", (10, 23), (11, 21)),
         ("Sagitario", (11, 22), (12, 21)),
 ]
-# Carpeta base donde están los archivos que vas a descargar
+## Carpeta base donde están los archivos que vas a descargar
 BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
 # Crear la carpeta si no existe
 # os.makedirs(BASE_DIR, exist_ok=True)
